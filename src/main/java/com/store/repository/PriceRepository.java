@@ -21,6 +21,6 @@ public interface PriceRepository extends JpaRepository<Price, Long> {
      * @param brandId   The brand id.
      * @return The resulted price list.
      */
-    @Query("SELECT p FROM Price p WHERE (p.startDate<=:priceDate AND p.endDate>=:priceDate) AND p.productId=:productId AND p.brandId=:brandId")
-    List<Price> findByParams(@Param("priceDate") LocalDateTime priceDate, @Param("productId") Integer productId, @Param("brandId") Integer brandId);
+    @Query("SELECT p FROM Price p WHERE (p.startDate<=:priceDate AND p.endDate>=:priceDate) AND p.productId=:productId AND p.brand.id=:brandId")
+    List<Price> findByParams(@Param("priceDate") LocalDateTime priceDate, @Param("productId") Long productId, @Param("brandId") Long brandId);
 }

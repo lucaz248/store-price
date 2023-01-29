@@ -22,22 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("price")
 public class PriceController {
     private static final Logger log = LoggerFactory.getLogger(PriceController.class);
     @Autowired
     private PriceService priceService;
-    private final HttpServletRequest request;
     @Autowired
     private PriceRepository priceRepository;
-
-    @Autowired
-    public PriceController(HttpServletRequest request) {
-        this.request = request;
-    }
 
     @Operation(summary = "Find price", description = "Find a pvp single price", tags = {"price"})
     @ApiResponses(value = {
@@ -48,19 +40,10 @@ public class PriceController {
             produces = {"application/json", "application/xml"},
             method = RequestMethod.GET)
     public ResponseEntity<PriceDto> findPricePvp(@Parameter(in = ParameterIn.PATH, description = "Price date to find", required = true, example = "2020-06-14-10.00", schema = @Schema()) @PathVariable("pricedate") String pricedate,
-                                                 @Parameter(in = ParameterIn.PATH, description = "Product id to find", required = true, example = "35455", schema = @Schema()) @PathVariable("productid") Integer productid,
-                                                 @Parameter(in = ParameterIn.PATH, description = "Brand id to find", required = true, example = "1", schema = @Schema()) @PathVariable("brandid") Integer brandid) {
+                                                 @Parameter(in = ParameterIn.PATH, description = "Product id to find", required = true, example = "35455", schema = @Schema()) @PathVariable("productid") Long productid,
+                                                 @Parameter(in = ParameterIn.PATH, description = "Brand id to find", required = true, example = "1", schema = @Schema()) @PathVariable("brandid") Long brandid) throws InvalidInputDataException, PriceNotFoundException {
 
-        try {
-            PriceDto pvpPrice = priceService.findPricePvp(pricedate, productid, brandid);
-            return new ResponseEntity<PriceDto>(pvpPrice, HttpStatus.OK);
-        } catch (PriceNotFoundException e) {
-            return new ResponseEntity<PriceDto>(HttpStatus.NOT_FOUND);
-        } catch (InvalidInputDataException e) {
-            return new ResponseEntity<PriceDto>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            log.error("Unexpected error:", e);
-            return new ResponseEntity<PriceDto>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        PriceDto pvpPrice = priceService.findPricePvp(pricedate, productid, brandid);
+        return new ResponseEntity<>(pvpPrice, HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.store.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,8 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "PRICE")
 public class Price {
@@ -17,18 +19,16 @@ public class Price {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @NotNull
-    @Column(name = "BRAND_ID", nullable = false)
-    private Integer brandId;
+    @OneToOne
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    private Brand brand;
 
     @NotNull
     @Column(name = "START_DATE", nullable = false)
-//    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime startDate;
 
     @NotNull
     @Column(name = "END_DATE", nullable = false)
-//    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime endDate;
 
     @NotNull
@@ -37,7 +37,7 @@ public class Price {
 
     @NotNull
     @Column(name = "PRODUCT_ID", nullable = false)
-    private Integer productId;
+    private Long productId;
 
     @NotNull
     @Column(name = "PRIORITY", nullable = false)

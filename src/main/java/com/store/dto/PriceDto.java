@@ -2,6 +2,7 @@ package com.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.store.entity.Brand;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class PriceDto implements Serializable {
-//identificador de producto, identificador de cadena, tarifa a aplicar, fechas de aplicación y precio final a aplicar.
     @JsonIgnore
     private Long id;
+
+    @JsonIgnore
+    private Brand brand;
+
     @Size(min = 1)
     @NotNull
-    private Integer brandId;
+    private Long brandId;
+
+    @JsonProperty("unpackNested")
+    private void unpackNested() {
+        this.brandId = this.brand.getId();
+    }
+
     @NotNull
     private LocalDateTime startDate;
     @NotNull
@@ -36,7 +46,7 @@ public class PriceDto implements Serializable {
     private Integer priceList;
     @Size(min = 1)
     @NotNull
-    private Integer productId;
+    private Long productId;
     @NotNull
     @JsonIgnore
     private Integer priority;

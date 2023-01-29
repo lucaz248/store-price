@@ -29,7 +29,7 @@ public class PriceServiceImpl implements PriceService {
     private ModelMapper modelMapper;
 
     @Override
-    public PriceDto findPricePvp(String priceDateStr, Integer productId, Integer brandId) throws PriceNotFoundException, InvalidInputDataException {
+    public PriceDto findPricePvp(String priceDateStr, Long productId, Long brandId) throws PriceNotFoundException, InvalidInputDataException {
 
         validateInputData(priceDateStr, productId, brandId);
         LocalDateTime priceDate = LocalDateTime.parse(priceDateStr, DATE_TIME_FORMATTER);
@@ -54,7 +54,7 @@ public class PriceServiceImpl implements PriceService {
      * @param brandId      Brand id
      * @throws InvalidInputDataException The invalid input data exception
      */
-    private void validateInputData(String priceDateStr, Integer productId, Integer brandId) throws InvalidInputDataException {
+    private void validateInputData(String priceDateStr, Long productId, Long brandId) throws InvalidInputDataException {
         boolean validData = true;
         try {
             if (productId <= 0 || brandId <= 0) {

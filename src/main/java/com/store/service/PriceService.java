@@ -17,5 +17,5 @@ public interface PriceService {
      * @param brandId   Price brandId to find
      * @return Price
      */
-    PriceDto findPricePvp(String priceDate, Integer productId, Integer brandId) throws PriceNotFoundException, InvalidInputDataException;
+    PriceDto findPricePvp(String priceDate, Long productId, Long brandId) throws PriceNotFoundException, InvalidInputDataException;
 }

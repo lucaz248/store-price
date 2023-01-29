@@ -32,8 +32,8 @@ class PriceServiceImplTest {
     @Test
     void findPricePvp() throws InvalidInputDataException, PriceNotFoundException {
         String priceDate = "2020-06-14-10.00";
-        Integer productId = 35455;
-        Integer brandId = 1;
+        Long productId = 35455L;
+        Long brandId = 1L;
         PriceDto pricePvp = priceService.findPricePvp(priceDate, productId, brandId);
         assertEquals(pricePvp.getPrice(), new BigDecimal("35.50"));
     }
