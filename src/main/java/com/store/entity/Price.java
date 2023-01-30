@@ -19,7 +19,7 @@ public class Price {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
 
