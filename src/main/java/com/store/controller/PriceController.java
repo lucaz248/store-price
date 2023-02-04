@@ -3,7 +3,6 @@ package com.store.controller;
 import com.store.dto.PriceDto;
 import com.store.exception.InvalidInputDataException;
 import com.store.exception.PriceNotFoundException;
-import com.store.repository.PriceRepository;
 import com.store.service.PriceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,8 +27,6 @@ public class PriceController {
     private static final Logger log = LoggerFactory.getLogger(PriceController.class);
     @Autowired
     private PriceService priceService;
-    @Autowired
-    private PriceRepository priceRepository;
 
     @Operation(summary = "Find price", description = "Find a pvp single price", tags = {"price"})
     @ApiResponses(value = {
