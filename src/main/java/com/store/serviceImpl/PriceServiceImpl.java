@@ -1,5 +1,6 @@
 package com.store.serviceImpl;
 
+import com.store.consts.Consts;
 import com.store.dto.PriceDto;
 import com.store.exception.InvalidInputDataException;
 import com.store.exception.PriceNotFoundException;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 
@@ -22,7 +22,6 @@ import java.util.List;
 @Service
 public class PriceServiceImpl implements PriceService {
     private static final Logger log = LoggerFactory.getLogger(PriceServiceImpl.class);
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm");
     @Autowired
     private PriceRepository priceRepository;
     @Autowired
@@ -32,7 +31,7 @@ public class PriceServiceImpl implements PriceService {
     public PriceDto findPricePvp(String priceDateStr, Long productId, Long brandId) throws PriceNotFoundException, InvalidInputDataException {
 
         validateInputData(priceDateStr, productId, brandId);
-        LocalDateTime priceDate = LocalDateTime.parse(priceDateStr, DATE_TIME_FORMATTER);
+        LocalDateTime priceDate = LocalDateTime.parse(priceDateStr, Consts.DATE_TIME_FORMATTER);
         List<com.store.entity.Price> prices = priceRepository.findByParams(priceDate, productId, brandId);
 
         if (prices.isEmpty()) {
@@ -60,7 +59,7 @@ public class PriceServiceImpl implements PriceService {
             if (productId <= 0 || brandId <= 0) {
                 validData = false;
             }
-            LocalDateTime priceDate = LocalDateTime.parse(priceDateStr, DATE_TIME_FORMATTER);
+            LocalDateTime priceDate = LocalDateTime.parse(priceDateStr, Consts.DATE_TIME_FORMATTER);
         } catch (Exception e) {
             validData = false;
         } finally {
